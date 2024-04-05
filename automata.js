@@ -57,16 +57,18 @@ class Automata {
         }
     };
 
+    //Draw the board (code taken from provided solution)
     draw(ctx) {
-        let size = 8;
-        let gap = 1;
-        ctx.fillStyle = "Black";
-        for (let col = 0; col < this.width; col++) {
-            for (let row = 0; row < this.height; row++) {
-                let cell = this.automata[col][row];
-                if (cell) ctx.fillRect(col * size + gap, row * size + gap, size - 2 * gap, size - 2 * gap);
-            }
-        }
-    };
+        let size = 8; //Size of the squares
+        let gap = 1; //Gap between the squares
+        ctx.fillStyle = "Black"; //Color of the squares
 
+        //Drawing the squares
+        for (let col = 0; col < this.width; col++)
+            for (let row = 0; row < this.height; row++) {
+                let cell = this.automata[col][row]; //Current cell to fill in
+                if (cell) //Check if the current cell should be filled in
+                    ctx.fillRect(col * size + gap, row * size + gap, size - 2 * gap, size - 2 * gap); //Fill in the current cell
+            }
+    };
 };
