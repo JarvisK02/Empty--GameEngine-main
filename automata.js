@@ -1,73 +1,80 @@
 class Automata {
-    //Automata constructor
     constructor(game) {
-        Object.assign(this, game); //Assign properties of the provided game engine to this automata
-        
-        //Size of the automata
-        this.automata = []; //Initialize empty array
-        this.height = 100; //Set height
-        this.width = 200; //Set width
+        Object.assign(this, { game });
 
-        //Speed of the automata
-        this.tickCount = 0; //Set initial tick count
-        this.ticks = 0; //Set initial ticks
-        this.speed = parseInt(document.getElementById("speed"), 10); //Retrieve speed from HTML file
+        this.automata = [];
+        this.height = 100;
+        this.width = 200;
 
-        //Create the random automata
-        for (let a = 0; a < this.width; a++) {
-            this.automata.push([]); //Create array inside the original array (form a 2D array)
-            for (let b = 0; b < this.height; b++)
-                this.automata[a][b] = Math.round(Math.random()); //Fill current index with a number between 0-1
+        this.tickCount = 0;
+        this.ticks = 0;
+
+        this.speed = parseInt(document.getElementById("speed").value, 10);
+
+
+        for (let col = 0; col < this.width; col++) {
+            this.automata.push([]);
+            for (let row = 0; row < this.height; row++) {
+                this.automata[col][row] = 0;
+            }
+        }
+        this.loadRandomAutomata();
+    };
+
+    loadRandomAutomata() {
+        for (let col = 0; col < this.width; col++) {
+            for (let row = 0; row < this.height; row++) {
+                this.automata[col][row] = randomInt(2);
+            }
         }
     };
 
-    //Update the board
-    update() {
-        this.speed = parseInt(document.getElementById("speed").value, 10); //Retrieve speed from HTML file
+    count(col, row) {
+        let count = 0;
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) count++;
+            }
+        }
+        return count;
+    };
 
-        if (this.tickCount + 1 >= this.speed && this.speed != 120) {
+    update() {
+        this.speed = parseInt(document.getElementById("speed").value, 10);
+
+        if (this.tickCount++ >= this.speed && this.speed != 120) {
             this.tickCount = 0;
             this.ticks++;
             document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
 
-            //Create the replacement automata
-            let newAutomata = [];
-            for (let c = 0; c < this.width; c++) {
-                newAutomata.push([]);
-                for (let d = 0; d < this.height; d++)
-                    newAutomata[c][d] = 0;
+            let next = [];
+            for (let col = 0; col < this.width; col++) {
+                next.push([]);
+                for (let row = 0; row < this.height; row++) {
+                    next[col].push(0);
+                }
             }
 
-            for (let e = 0; e < this.width; e++)
-                for (let f = 0; f < this.height; f++)
-                    if ((this.automata[e][f] && (this.countAlive(e, f) === 2 || this.countAlive(e, f) === 3)) ||
-                        (!this.automata[e][f] && this.countAlive(e, f) === 3))
-                        newAutomata[e][f] = 1;
-
-            this.automata = newAutomata;
+            for (let col = 0; col < this.width; col++) {
+                for (let row = 0; row < this.height; row++) {
+                    if (this.automata[col][row] && (this.count(col, row) === 2 || this.count(col, row) === 3)) next[col][row] = 1;
+                    if (!this.automata[col][row] && this.count(col, row) === 3) next[col][row] = 1;
+                }
+            }
+            this.automata = next;
         }
     };
 
-    //Draw the board (code taken from provided solution)
     draw(ctx) {
-        let size = 8; //Size of the squares
-        let gap = 1; //Gap between the squares
-        ctx.fillStyle = "Black"; //Color of the squares
-
-        //Drawing the squares
-        for (let col = 0; col < this.width; col++)
+        let size = 8;
+        let gap = 1;
+        ctx.fillStyle = "Black";
+        for (let col = 0; col < this.width; col++) {
             for (let row = 0; row < this.height; row++) {
-                let cell = this.automata[col][row]; //Current cell to fill in
-                if (cell) //Check if the current cell should be filled in
-                    ctx.fillRect(col * size + gap, row * size + gap, size - 2 * gap, size - 2 * gap); //Fill in the current cell
+                let cell = this.automata[col][row];
+                if (cell) ctx.fillRect(col * size + gap, row * size + gap, size - 2 * gap, size - 2 * gap);
             }
+        }
     };
 
-    countAlive(col, row) {
-        let aliveCount = 0;
-        for (let g = 0; g < 3; g++)
-            for (let h = 0; h < 3; h++)
-                count += this.automata[col + g][row + h];
-        return aliveCount;
-    };
 };
