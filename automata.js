@@ -47,10 +47,10 @@ class Automata {
 
             for (let i = 0; i < this.width; i++)
                 for (let j = 0; j < this.height; j++)
-                    if ((this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) ||
-                        (!this.automata[i][j] && this.countAlive(i, j) === 3))
-                        newAutomata[i][j] = 1;
-                        
+                    if ((this.automata[i][j] && (this.count(i, j) === 2 || this.count(i, j) === 3)) ||
+                        (!this.automata[i][j] && this.count(i, j) === 3))
+                        next[i][j] = 1;
+
             this.automata = next;
         }
     };
