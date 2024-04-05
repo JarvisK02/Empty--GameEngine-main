@@ -22,11 +22,13 @@ class Automata {
     };
 
     count(col, row) {
-        let aliveCount = 0;
-        for (let i = 0; i < 3; i++)
-            for (let j = 0; j < 3; j++)
-                count += this.automata[col + i][row + j];
-        return aliveCount;
+        let count = 0;
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) count++;
+            }
+        }
+        return count;
     };
 
     update() {
@@ -56,17 +58,15 @@ class Automata {
     };
 
     draw(ctx) {
-        let size = 8; //Size of the squares
-        let gap = 1; //Gap between the squares
-        ctx.fillStyle = "Black"; //Color of the squares
-
-        //Drawing the squares
-        for (let col = 0; col < this.width; col++)
+        let size = 8;
+        let gap = 1;
+        ctx.fillStyle = "Black";
+        for (let col = 0; col < this.width; col++) {
             for (let row = 0; row < this.height; row++) {
-                let cell = this.automata[col][row]; //Current cell to fill in
-                if (cell) //Check if the current cell should be filled in
-                    ctx.fillRect(col * size + gap, row * size + gap, size - 2 * gap, size - 2 * gap); //Fill in the current cell
+                let cell = this.automata[col][row];
+                if (cell) ctx.fillRect(col * size + gap, row * size + gap, size - 2 * gap, size - 2 * gap);
             }
+        }
     };
 
 };
