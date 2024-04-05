@@ -42,7 +42,7 @@ class Automata {
             for (let i = 0; i < this.width; i++) {
                 newAutomata.push([]);
                 for (let j = 0; j < this.height; j++)
-                    newAutomata[i][j] = 0;
+                    newAutomata[i].push(0);
             }
 
             for (let col = 0; col < this.width; col++) {
