@@ -25,7 +25,7 @@ class Automata {
     update() {
         this.speed = parseInt(document.getElementById("speed").value, 10); //Retrieve speed from HTML file
 
-        if (this.tickCount + 1 >= this.speed && this.speed != 120) {
+        if (this.tickCount + 1 >= this.speed && this.speed < 120) {
             this.tickCount = 0;
             this.ticks++;
             document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
@@ -38,6 +38,7 @@ class Automata {
                     newAutomata[i][j] = 0;
             }
 
+            //Determine if cells should be living or dead
             for (let i = 0; i < this.width; i++)
                 for (let j = 0; j < this.height; j++)
                     if ((this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) ||
@@ -48,6 +49,7 @@ class Automata {
         }
     };
 
+    //Draw the board (code taken from provided solution)
     draw(ctx) {
         let size = 8;
         let gap = 1;
@@ -60,6 +62,7 @@ class Automata {
         }
     };
 
+    //Count number of living cells adjacent to given cell
     countAlive(col, row) {
         let aliveCount = 0;
         for (let i = 0; i < 3; i++)
