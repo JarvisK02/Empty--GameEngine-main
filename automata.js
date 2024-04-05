@@ -64,10 +64,12 @@ class Automata {
 
     //Count number of living cells adjacent to given cell
     countAlive(col, row) {
-        let aliveCount = 0;
-        for (let i = 0; i < 3; i++)
-            for (let j = 0; j < 3; j++)
-                count += this.automata[col + i][row + j];
-        return aliveCount;
+        let count = 0;
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) count++;
+            }
+        }
+        return count;
     };
 };
