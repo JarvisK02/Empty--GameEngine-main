@@ -31,7 +31,7 @@ class Automata {
             document.getElementById("ticks").innerHTML = "Ticks: " + this.ticks;
 
             //Create the replacement automata
-            let newAutomata = [];
+            /*let newAutomata = [];
             for (let i = 0; i < this.width; i++) {
                 newAutomata.push([]);
                 for (let j = 0; j < this.height; j++)
@@ -44,7 +44,7 @@ class Automata {
                         (!this.automata[i][j] && this.countAlive(i, j) === 3))
                         newAutomata[i][j] = 1;
 
-            this.automata = newAutomata;
+            this.automata = newAutomata;*/
         }
     };
 
