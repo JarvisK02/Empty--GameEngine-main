@@ -6,7 +6,7 @@ class Automata {
         //Size of the automata
         this.automata = []; //Initialize empty array
         this.height = 100; //Set height
-        this.width = 100; //Set width
+        this.width = 200; //Set width
 
         //Speed of the automata
         this.tickCount = 0; //Set initial tick count
