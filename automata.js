@@ -14,10 +14,10 @@ class Automata {
         this.speed = parseInt(document.getElementById("speed"), 10); //Retrieve speed from HTML file
 
         //Create the random automata
-        for (let i = 0; i < this.width; i++) {
+        for (let a = 0; a < this.width; a++) {
             this.automata.push([]); //Create array inside the original array (form a 2D array)
-            for (let j = 0; j < this.height; j++)
-                this.automata[i][j] = Math.round(Math.random()); //Fill current index with a number between 0-1
+            for (let b = 0; b < this.height; b++)
+                this.automata[a][b] = Math.round(Math.random()); //Fill current index with a number between 0-1
         }
     };
 
@@ -32,17 +32,17 @@ class Automata {
 
             //Create the replacement automata
             let newAutomata = [];
-            for (let i = 0; i < this.width; i++) {
+            for (let c = 0; c < this.width; c++) {
                 newAutomata.push([]);
-                for (let j = 0; j < this.height; j++)
-                    newAutomata[i][j] = 0;
+                for (let d = 0; d < this.height; d++)
+                    newAutomata[c][d] = 0;
             }
 
-            for (let i = 0; i < this.width; i++)
-                for (let j = 0; j < this.height; j++)
-                    if ((this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) ||
-                        (!this.automata[i][j] && this.countAlive(i, j) === 3))
-                        newAutomata[i][j] = 1;
+            for (let e = 0; e < this.width; e++)
+                for (let f = 0; f < this.height; f++)
+                    if ((this.automata[e][f] && (this.countAlive(e, f) === 2 || this.countAlive(e, f) === 3)) ||
+                        (!this.automata[e][f] && this.countAlive(e, f) === 3))
+                        newAutomata[e][f] = 1;
 
             this.automata = newAutomata;
         }
@@ -65,9 +65,9 @@ class Automata {
 
     countAlive(col, row) {
         let aliveCount = 0;
-        for (let i = 0; i < 3; i++)
-            for (let j = 0; j < 3; j++)
-                count += this.automata[col + i][row + j];
+        for (let g = 0; g < 3; g++)
+            for (let h = 0; h < 3; h++)
+                count += this.automata[col + g][row + h];
         return aliveCount;
     };
 };
