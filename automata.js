@@ -16,17 +16,21 @@ class Automata {
         //Create the random automata
         for (let i = 0; i < this.width; i++) {
             this.automata.push([]); //Create array inside the original array (form a 2D array)
-            for (let j = 0; j < this.height; j++)
+            for (let j = 0; j < this.height; j++) {
                 this.automata[i][j] = Math.round(Math.random()); //Fill current index with a number between 0-1
+            }
         }
     };
     
     countAlive(col, row) {
         let count = 0;
-        for (let i = -1; i < 2; i++)
-            for (let j = -1; j < 2; j++)
-                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j])
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) {
                     count++;
+                }
+            }
+        }
         return count;
     };
 
@@ -42,16 +46,19 @@ class Automata {
             let nextAutomata = [];
             for (let i = 0; i < this.width; i++) {
                 nextAutomata.push([]);
-                for (let j = 0; j < this.height; j++)
+                for (let j = 0; j < this.height; j++) {
                     nextAutomata[i].push(0);
+                }
             }
 
             for (let i = 0; i < this.width; i++) {
                 for (let j = 0; j < this.height; j++) {
-                    if (this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) 
+                    if (this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) {
                         nextAutomata[i][j] = 1;
-                    if (!this.automata[i][j] && this.countAlive(i, j) === 3)
+                    }
+                    if (!this.automata[i][j] && this.countAlive(i, j) === 3) {
                         nextAutomata[i][j] = 1;
+                    }
                 }
             }
 
