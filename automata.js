@@ -37,12 +37,11 @@ class Automata {
             this.ticks++;
             document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
 
-            //Create the replacement automata
             let next = [];
-            for (let i = 0; i < this.width; i++) {
+            for (let col = 0; col < this.width; col++) {
                 next.push([]);
-                for (let j = 0; j < this.height; j++) {
-                    next[i][j] = 0;
+                for (let row = 0; row < this.height; row++) {
+                    next[col].push(0);
                 }
             }
 
@@ -52,7 +51,6 @@ class Automata {
                     if (!this.automata[col][row] && this.count(col, row) === 3) next[col][row] = 1;
                 }
             }
-
             this.automata = next;
         }
     };
