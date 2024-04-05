@@ -16,8 +16,9 @@ class Automata {
         //Create the random automata
         for (let i = 0; i < this.width; i++) {
             this.automata.push([]); //Create array inside the original array (form a 2D array)
-            for (let j = 0; j < this.height; j++)
+            for (let j = 0; j < this.height; j++) {
                 this.automata[i][j] = Math.round(Math.random()); //Fill current index with a number between 0-1
+            }
         }
     };
     
@@ -34,16 +35,20 @@ class Automata {
             let newAutomata = [];
             for (let i = 0; i < this.width; i++) {
                 newAutomata.push([]);
-                for (let j = 0; j < this.height; j++)
+                for (let j = 0; j < this.height; j++) {
                     newAutomata[i].push(0);
+                }
             }
 
             //Determine if cells should be living or dead
-            for (let i = 0; i < this.width; i++)
-                for (let j = 0; j < this.height; j++)
+            for (let i = 0; i < this.width; i++) {
+                for (let j = 0; j < this.height; j++) {
                     if ((this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) ||
-                        (!this.automata[i][j] && this.countAlive(i, j) === 3))
+                        (!this.automata[i][j] && this.countAlive(i, j) === 3)) {
                         newAutomata[i][j] = 1;
+                    }
+                }
+            }
 
             this.automata = newAutomata;
         }
