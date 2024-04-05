@@ -1,23 +1,31 @@
 class Automata {
-    //Automata constructor
     constructor(game) {
-        Object.assign(this, game); //Assign properties of the provided game engine to this automata
-        
-        //Size of the automata
-        this.automata = []; //Initialize empty array
-        this.height = 100; //Set height
-        this.width = 200; //Set width
+        Object.assign(this, { game });
 
-        //Speed of the automata
-        this.tickCount = 0; //Set initial tick count
-        this.ticks = 0; //Set initial ticks
-        this.speed = parseInt(document.getElementById("speed"), 10); //Retrieve speed from HTML file
+        this.automata = [];
+        this.height = 100;
+        this.width = 200;
 
-        //Create the random automata
-        for (let i = 0; i < this.width; i++) {
-            this.automata.push([]); //Create array inside the original array (form a 2D array)
-            for (let j = 0; j < this.height; j++)
-                this.automata[i][j] = Math.round(Math.random()); //Fill current index with a number between 0-1
+        this.tickCount = 0;
+        this.ticks = 0;
+
+        this.speed = parseInt(document.getElementById("speed").value, 10);
+
+
+        for (let col = 0; col < this.width; col++) {
+            this.automata.push([]);
+            for (let row = 0; row < this.height; row++) {
+                this.automata[col][row] = 0;
+            }
+        }
+        this.loadRandomAutomata();
+    };
+
+    loadRandomAutomata() {
+        for (let col = 0; col < this.width; col++) {
+            for (let row = 0; row < this.height; row++) {
+                this.automata[col][row] = randomInt(2);
+            }
         }
     };
 
