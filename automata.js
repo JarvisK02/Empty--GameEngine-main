@@ -28,7 +28,7 @@ class Automata {
         if (this.tickCount + 1 >= this.speed && this.speed != 120) {
             this.tickCount = 0;
             this.ticks++;
-            document.getElementById("ticks").innerHTML = "Ticks: " + this.ticks;
+            document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
 
             //Create the replacement automata
             /*let newAutomata = [];
