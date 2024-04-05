@@ -21,35 +21,42 @@ class Automata {
         }
     };
 
-    //Update the board
-    update() {
-        this.speed = parseInt(document.getElementById("speed").value, 10); //Retrieve speed from HTML file
+    count(col, row) {
+        let count = 0;
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) count++;
+            }
+        }
+        return count;
+    };
 
-        if (this.tickCount + 1 >= this.speed && this.speed < 120) {
+    update() {
+        this.speed = parseInt(document.getElementById("speed").value, 10);
+
+        if (this.tickCount++ >= this.speed && this.speed != 120) {
             this.tickCount = 0;
             this.ticks++;
             document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
 
-            //Create the replacement automata
-            let newAutomata = [];
-            for (let i = 0; i < this.width; i++) {
-                newAutomata.push([]);
-                for (let j = 0; j < this.height; j++)
-                    newAutomata[i][j] = 0;
+            let next = [];
+            for (let col = 0; col < this.width; col++) {
+                next.push([]);
+                for (let row = 0; row < this.height; row++) {
+                    next[col].push(0);
+                }
             }
 
-            //Determine if cells should be living or dead
-            for (let i = 0; i < this.width; i++)
-                for (let j = 0; j < this.height; j++)
-                    if ((this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) ||
-                        (!this.automata[i][j] && this.countAlive(i, j) === 3))
-                        newAutomata[i][j] = 1;
-
-            this.automata = newAutomata;
+            for (let col = 0; col < this.width; col++) {
+                for (let row = 0; row < this.height; row++) {
+                    if (this.automata[col][row] && (this.count(col, row) === 2 || this.count(col, row) === 3)) next[col][row] = 1;
+                    if (!this.automata[col][row] && this.count(col, row) === 3) next[col][row] = 1;
+                }
+            }
+            this.automata = next;
         }
     };
 
-    //Draw the board (code taken from provided solution)
     draw(ctx) {
         let size = 8;
         let gap = 1;
@@ -62,14 +69,4 @@ class Automata {
         }
     };
 
-    //Count number of living cells adjacent to given cell
-    countAlive(col, row) {
-        let count = 0;
-        for (let i = -1; i < 2; i++) {
-            for (let j = -1; j < 2; j++) {
-                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) count++;
-            }
-        }
-        return count;
-    };
 };
