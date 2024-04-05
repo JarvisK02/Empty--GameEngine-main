@@ -22,6 +22,16 @@ class Automata {
         }
     };
     
+    countAlive(col, row) {
+        let count = 0;
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) count++;
+            }
+        }
+        return count;
+    };
+
     //Update the board
     update() {
         this.speed = parseInt(document.getElementById("speed").value, 10); //Retrieve speed from HTML file
@@ -65,15 +75,5 @@ class Automata {
                 if (cell) ctx.fillRect(col * size + gap, row * size + gap, size - 2 * gap, size - 2 * gap);
             }
         }
-    };
-
-    countAlive(col, row) {
-        let count = 0;
-        for (let i = -1; i < 2; i++) {
-            for (let j = -1; j < 2; j++) {
-                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) count++;
-            }
-        }
-        return count;
     };
 };
