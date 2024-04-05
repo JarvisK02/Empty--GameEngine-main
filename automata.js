@@ -45,12 +45,12 @@ class Automata {
                     next[i][j] = 0;
             }
 
-            for (let col = 0; col < this.width; col++) {
-                for (let row = 0; row < this.height; row++) {
-                    if (this.automata[col][row] && (this.count(col, row) === 2 || this.count(col, row) === 3)) next[col][row] = 1;
-                    if (!this.automata[col][row] && this.count(col, row) === 3) next[col][row] = 1;
-                }
-            }
+            for (let i = 0; i < this.width; i++)
+                for (let j = 0; j < this.height; j++)
+                    if ((this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) ||
+                        (!this.automata[i][j] && this.countAlive(i, j) === 3))
+                        newAutomata[i][j] = 1;
+                        
             this.automata = next;
         }
     };
