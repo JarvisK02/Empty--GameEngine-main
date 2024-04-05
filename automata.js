@@ -4,20 +4,20 @@ class Automata {
         Object.assign(this, game); //Assign properties of the provided game engine to this automata
         
         //Size of the automata
-        this.automata = []; //Initialize empty array
-        this.height = 100; //Set height
-        this.width = 200; //Set width
+        this.automata = [];
+        this.height = 100;
+        this.width = 200;
 
         //Speed of the automata
-        this.tickCount = 0; //Set initial tick count
-        this.ticks = 0; //Set initial ticks
+        this.tickCount = 0;
+        this.ticks = 0;
         this.speed = parseInt(document.getElementById("speed"), 10); //Retrieve speed from HTML file
 
         //Create the random automata
         for (let i = 0; i < this.width; i++) {
-            this.automata.push([]); //Create array inside the original array (form a 2D array)
+            this.automata.push([]); //Create 2D array
             for (let j = 0; j < this.height; j++) {
-                this.automata[i][j] = Math.round(Math.random()); //Fill current index with a number between 0-1
+                this.automata[i][j] = Math.round(Math.random()); //Make current cell living or dead
             }
         }
     };
@@ -27,9 +27,7 @@ class Automata {
         let count = 0;
         for (let i = -1; i < 2; i++) {
             for (let j = -1; j < 2; j++) {
-                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) {
-                    count++;
-                }
+                count += this.automata[col + i][row + j];
             }
         }
         return count;
@@ -45,19 +43,11 @@ class Automata {
             document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
 
             let nextAutomata = [];
-            /*for (let i = 0; i < this.width; i++) {
-                nextAutomata.push([]);
-                for (let j = 0; j < this.height; j++) {
-                    nextAutomata[i][j] = 0;
-                }
-            }*/
-
             for (let i = 0; i < this.width; i++) {
                 nextAutomata.push([]);
                 for (let j = 0; j < this.height; j++) {
-                    if (this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) {
-                        nextAutomata[i][j] = 1;
-                    } else if (!this.automata[i][j] && this.countAlive(i, j) === 3) {
+                    if ((this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) ||
+                        (!this.automata[i][j] && this.countAlive(i, j) === 3)) {
                         nextAutomata[i][j] = 1;
                     }
                 }
@@ -67,7 +57,7 @@ class Automata {
         }
     };
 
-
+    //Draw the board (code taken from provided solution)
     draw(ctx) {
         let size = 8;
         let gap = 1;
