@@ -1,221 +1,55 @@
 class Automata {
+    //Automata constructor
     constructor(game) {
-        Object.assign(this, { game });
+        Object.assign(this, game); //Assign properties of the provided game engine to this automata
+        
+        //Size of the automata
+        this.automata = []; //Initialize empty array
+        this.height = 100; //Set height
+        this.width = 200; //Set width
 
-        this.automata = [];
-        this.height = 100;
-        this.width = 200;
+        //Speed of the automata
+        this.tickCount = 0; //Set initial tick count
+        this.ticks = 0; //Set initial ticks
+        this.speed = parseInt(document.getElementById("speed"), 10); //Retrieve speed from HTML file
 
-        this.tickCount = 0;
-        this.ticks = 0;
-
-        this.speed = parseInt(document.getElementById("speed").value, 10);
-
-
-        for (let col = 0; col < this.width; col++) {
-            this.automata.push([]);
-            for (let row = 0; row < this.height; row++) {
-                this.automata[col][row] = 0;
-            }
-        }
-        this.loadRandomAutomata();
-    };
-
-    loadRandomAutomata() {
-        for (let col = 0; col < this.width; col++) {
-            for (let row = 0; row < this.height; row++) {
-                this.automata[col][row] = randomInt(2);
-            }
+        //Create the random automata
+        for (let i = 0; i < this.width; i++) {
+            this.automata.push([]); //Create array inside the original array (form a 2D array)
+            for (let j = 0; j < this.height; j++)
+                this.automata[i][j] = Math.round(Math.random()); //Fill current index with a number between 0-1
         }
     };
 
-    addBlock(col, row) {
-        this.automata[col][row] = 1;
-        this.automata[col + 1][row] = 1;
-        this.automata[col][row + 1] = 1;
-        this.automata[col + 1][row + 1] = 1;
-    };
-
-    addHive(col, row, vert) {
-        if (vert) {
-            this.automata[col][row] = 1;
-            this.automata[col + 1][row + 1] = 1;
-            this.automata[col - 1][row + 1] = 1;
-            this.automata[col + 1][row + 2] = 1;
-            this.automata[col - 1][row + 2] = 1;
-            this.automata[col][row + 3] = 1;
-        } else {
-            this.automata[col][row] = 1;
-            this.automata[col + 1][row + 1] = 1;
-            this.automata[col + 1][row - 1] = 1;
-            this.automata[col + 2][row + 1] = 1;
-            this.automata[col + 2][row - 1] = 1;
-            this.automata[col + 3][row] = 1;
-        }
-    };
-
-    addLoaf(col, row) {
-        this.automata[col][row] = 1;
-        this.automata[col + 1][row + 1] = 1;
-        this.automata[col + 1][row - 1] = 1;
-        this.automata[col + 2][row + 2] = 1;
-        this.automata[col + 2][row - 1] = 1;
-        this.automata[col + 3][row] = 1;
-        this.automata[col + 3][row + 1] = 1;
-    };
-
-    addBoat(col, row) {
-        this.automata[col][row] = 1;
-        this.automata[col][row + 1] = 1;
-        this.automata[col + 1][row] = 1;
-        this.automata[col + 1][row + 2] = 1;
-        this.automata[col + 2][row + 1] = 1;
-    };
-
-
-    addTub(col, row) {
-        this.automata[col][row] = 1;
-        this.automata[col + 1][row + 1] = 1;
-        this.automata[col + 1][row - 1] = 1;
-        this.automata[col + 2][row] = 1;
-    };
-
-    addBlinker(col, row, vert) {
-        if (vert) {
-            this.automata[col][row] = 1;
-            this.automata[col][row + 1] = 1;
-            this.automata[col][row + 2] = 1;
-        } else {
-            this.automata[col][row] = 1;
-            this.automata[col + 1][row] = 1;
-            this.automata[col + 2][row] = 1;
-        }
-    };
-
-    addToad(col, row) {
-        this.addBlinker(col, row);
-        this.addBlinker(col + 1, row + 1);
-    };
-
-    addBeacon(col, row) {
-        this.addBlock(col, row);
-        this.addBlock(col + 2, row + 2);
-    };
-
-    addPulsar(col, row) {
-        this.addBlinker(col, row, true);
-        this.addBlinker(col + 5, row, true);
-        this.addBlinker(col + 7, row, true);
-        this.addBlinker(col + 12, row, true);
-        this.addBlinker(col, row + 6, true);
-        this.addBlinker(col + 5, row + 6, true);
-        this.addBlinker(col + 7, row + 6, true);
-        this.addBlinker(col + 12, row + 6, true);
-        this.addBlinker(col + 2, row - 2, false);
-        this.addBlinker(col + 2, row + 3, false);
-        this.addBlinker(col + 2, row + 5, false);
-        this.addBlinker(col + 2, row + 10, false);
-        this.addBlinker(col + 8, row - 2, false);
-        this.addBlinker(col + 8, row + 3, false);
-        this.addBlinker(col + 8, row + 5, false);
-        this.addBlinker(col + 8, row + 10, false);
-    };
-
-    addPenta(col, row) {
-        this.automata[col][row] = 1;
-        this.addBlinker(col - 1, row + 1);
-        this.addBlinker(col - 2, row + 2);
-        this.addBlinker(col, row + 2);
-        this.addBlinker(col - 2, row + 9);
-        this.addBlinker(col, row + 9);
-        this.addBlinker(col - 1, row + 10);
-        this.automata[col][row + 11] = 1;
-    };
-
-    addGosper(col, row) {
-        this.addBlock(col, row);
-        this.addBlinker(col + 10, row, true);
-        this.automata[col + 11][row - 1] = 1;
-        this.automata[col + 11][row + 3] = 1;
-        this.automata[col + 12][row - 2] = 1;
-        this.automata[col + 12][row + 4] = 1;
-        this.automata[col + 13][row - 2] = 1;
-        this.automata[col + 13][row + 4] = 1;
-        this.automata[col + 14][row + 1] = 1;
-        this.automata[col + 15][row - 1] = 1;
-        this.automata[col + 15][row + 3] = 1;
-        this.addBlinker(col + 16, row, true);
-        this.automata[col + 17][row + 1] = 1;
-        this.addBlinker(col + 20, row - 2, true);
-        this.addBlinker(col + 21, row - 2, true);
-        this.automata[col + 22][row - 3] = 1;
-        this.automata[col + 22][row + 1] = 1;
-        this.automata[col + 24][row - 3] = 1;
-        this.automata[col + 24][row + 1] = 1;
-        this.automata[col + 24][row - 4] = 1;
-        this.automata[col + 24][row + 2] = 1;
-        this.addBlock(col + 34, row - 2);
-    };
-    
-    loadAutomata() {
-        for (let col = 0; col < this.width; col++) {
-            for (let row = 0; row < this.height; row++) {
-                this.automata[col][row] = 0;
-            }
-        }
-
-        this.addBlock(10, 10);
-        this.addHive(14, 11, false);
-        this.addHive(21, 10, true);
-        this.addTub(10, 15);
-        this.addLoaf(15, 16);
-        this.addBoat(21, 16);
-
-        this.addBlinker(30, 11);
-        this.addToad(35, 11);
-        this.addBeacon(41, 10);
-        this.addPulsar(48, 11);
-        this.addPenta(68, 9);
-
-        this.addGosper(10, 50);
-    };
-
-    count(col, row) {
-        let count = 0;
-        for (let i = -1; i < 2; i++) {
-            for (let j = -1; j < 2; j++) {
-                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) count++;
-            }
-        }
-        return count;
-    };
-
+    //Update the board
     update() {
-        this.speed = parseInt(document.getElementById("speed").value, 10);
+        this.speed = parseInt(document.getElementById("speed").value, 10); //Retrieve speed from HTML file
 
-        if (this.tickCount++ >= this.speed && this.speed != 120) {
+        if (this.tickCount + 1 >= this.speed && this.speed < 120) {
             this.tickCount = 0;
             this.ticks++;
             document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
 
-            let next = [];
-            for (let col = 0; col < this.width; col++) {
-                next.push([]);
-                for (let row = 0; row < this.height; row++) {
-                    next[col].push(0);
-                }
+            //Create the replacement automata
+            let newAutomata = [];
+            for (let i = 0; i < this.width; i++) {
+                newAutomata.push([]);
+                for (let j = 0; j < this.height; j++)
+                    newAutomata[i][j] = 0;
             }
 
-            for (let col = 0; col < this.width; col++) {
-                for (let row = 0; row < this.height; row++) {
-                    if (this.automata[col][row] && (this.count(col, row) === 2 || this.count(col, row) === 3)) next[col][row] = 1;
-                    if (!this.automata[col][row] && this.count(col, row) === 3) next[col][row] = 1;
-                }
-            }
-            this.automata = next;
+            //Determine if cells should be living or dead
+            for (let i = 0; i < this.width; i++)
+                for (let j = 0; j < this.height; j++)
+                    if ((this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) ||
+                        (!this.automata[i][j] && this.countAlive(i, j) === 3))
+                        newAutomata[i][j] = 1;
+
+            this.automata = newAutomata;
         }
     };
 
+    //Draw the board (code taken from provided solution)
     draw(ctx) {
         let size = 8;
         let gap = 1;
@@ -228,4 +62,12 @@ class Automata {
         }
     };
 
+    //Count number of living cells adjacent to given cell
+    countAlive(col, row) {
+        let aliveCount = 0;
+        for (let i = 0; i < 3; i++)
+            for (let j = 0; j < 3; j++)
+                count += this.automata[col + i][row + j];
+        return aliveCount;
+    };
 };
