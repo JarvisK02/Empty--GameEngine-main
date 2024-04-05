@@ -21,14 +21,6 @@ class Automata {
         }
     };
 
-    loadRandomAutomata() {
-        for (let col = 0; col < this.width; col++) {
-            for (let row = 0; row < this.height; row++) {
-                this.automata[col][row] = randomInt(2);
-            }
-        }
-    };
-
     count(col, row) {
         let count = 0;
         for (let i = -1; i < 2; i++) {
