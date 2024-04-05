@@ -5,7 +5,7 @@ class Automata {
         
         //Size of the automata
         this.automata = []; //Initialize empty array
-        this.height = 200; //Set height
+        this.height = 100; //Set height
         this.width = 200; //Set width
 
         //Speed of the automata
@@ -21,6 +21,7 @@ class Automata {
         }
     };
 
+    //Update the board
     update() {
         this.speed = parseInt(document.getElementById("speed").value, 10); //Retrieve speed from HTML file
 
@@ -47,6 +48,7 @@ class Automata {
         }
     };
 
+    //Draw the board (code taken from provided solution)
     draw(ctx) {
         let size = 8; //Size of the squares
         let gap = 1; //Gap between the squares
