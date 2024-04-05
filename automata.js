@@ -5,7 +5,7 @@ class Automata {
         
         //Size of the automata
         this.automata = []; //Initialize empty array
-        this.height = 100; //Set height
+        this.height = 200; //Set height
         this.width = 200; //Set width
 
         //Speed of the automata
@@ -27,7 +27,7 @@ class Automata {
         if (this.tickCount + 1 >= this.speed && this.speed != 120) {
             this.tickCount = 0;
             this.ticks++;
-            document.getElementById("ticks").innerHTML = "Time passed: " + this.ticks;
+            document.getElementById("ticks").innerHTML = "Ticks: " + this.ticks;
 
             //Create the replacement automata
             let newAutomata = [];
