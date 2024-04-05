@@ -22,6 +22,7 @@ class Automata {
         }
     };
     
+    //Count the living cells surrounding a given cell
     countAlive(col, row) {
         let count = 0;
         for (let i = -1; i < 2; i++) {
@@ -44,19 +45,19 @@ class Automata {
             document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
 
             let nextAutomata = [];
+            /*for (let i = 0; i < this.width; i++) {
+                nextAutomata.push([]);
+                for (let j = 0; j < this.height; j++) {
+                    nextAutomata[i][j] = 0;
+                }
+            }*/
+
             for (let i = 0; i < this.width; i++) {
                 nextAutomata.push([]);
                 for (let j = 0; j < this.height; j++) {
-                    nextAutomata[i].push(0);
-                }
-            }
-
-            for (let i = 0; i < this.width; i++) {
-                for (let j = 0; j < this.height; j++) {
                     if (this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) {
                         nextAutomata[i][j] = 1;
-                    }
-                    if (!this.automata[i][j] && this.countAlive(i, j) === 3) {
+                    } else if (!this.automata[i][j] && this.countAlive(i, j) === 3) {
                         nextAutomata[i][j] = 1;
                     }
                 }
@@ -66,6 +67,7 @@ class Automata {
         }
     };
 
+
     draw(ctx) {
         let size = 8;
         let gap = 1;
@@ -73,7 +75,9 @@ class Automata {
         for (let col = 0; col < this.width; col++) {
             for (let row = 0; row < this.height; row++) {
                 let cell = this.automata[col][row];
-                if (cell) ctx.fillRect(col * size + gap, row * size + gap, size - 2 * gap, size - 2 * gap);
+                if (cell) {
+                    ctx.fillRect(col * size + gap, row * size + gap, size - 2 * gap, size - 2 * gap);
+                }
             }
         }
     };
