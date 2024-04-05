@@ -38,7 +38,7 @@ class Automata {
     update() {
         this.speed = parseInt(document.getElementById("speed").value, 10);
 
-        if (this.tickCount + 1 >= this.speed && this.speed != 120) {
+        if (this.tickCount++ >= this.speed && this.speed != 120) {
             this.tickCount = 0;
             this.ticks++;
             document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
