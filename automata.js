@@ -34,34 +34,28 @@ class Automata {
 
     //Update the board
     update() {
-        this.speed = parseInt(document.getElementById("speed").value, 10); //Retrieve speed from HTML file
+        this.speed = parseInt(document.getElementById("speed").value, 10);
 
-        if (this.tickCount + 1 >= this.speed && this.speed != 120) {
+        if (this.tickCount++ >= this.speed && this.speed != 120) {
             this.tickCount = 0;
             this.ticks++;
             document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
 
-            //Create the replacement automata
-            let newAutomata = [];
+            let nextAutomata = [];
             for (let i = 0; i < this.width; i++) {
-                newAutomata.push([]);
+                nextAutomata.push([]);
                 for (let j = 0; j < this.height; j++) {
-                    newAutomata[i].push(0);
+                    nextAutomata[i].push(0);
                 }
             }
 
-            //Determine if cells should be living or dead
             for (let i = 0; i < this.width; i++) {
                 for (let j = 0; j < this.height; j++) {
-                    if (this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) {
-                        newAutomata[i][j] = 1;
-                    } else if (!this.automata[i][j] && this.countAlive(i, j) === 3) {
-                        newAutomata[i][j] = 1;
-                    }
+                    if (this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) nextAutomata[i][j] = 1;
+                    if (!this.automata[i][j] && this.countAlive(i, j) === 3) nextAutomata[i][j] = 1;
                 }
             }
-
-            this.automata = newAutomata;
+            this.automata = nextAutomata;
         }
     };
 
