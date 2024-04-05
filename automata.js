@@ -41,8 +41,9 @@ class Automata {
             let next = [];
             for (let i = 0; i < this.width; i++) {
                 next.push([]);
-                for (let j = 0; j < this.height; j++)
+                for (let j = 0; j < this.height; j++) {
                     next[i][j] = 0;
+                }
             }
 
             for (let col = 0; col < this.width; col++) {
