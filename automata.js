@@ -27,8 +27,8 @@ class Automata {
         let count = 0;
         for (let i = -1; i < 2; i++) {
             for (let j = -1; j < 2; j++) {
-                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) {
-                    count++;
+                if (i || j) {
+                    count += this.automata[col + i][row + j];
                 }
             }
         }
@@ -37,17 +37,23 @@ class Automata {
 
     //Update the board
     update() {
-        this.speed = parseInt(document.getElementById("speed").value, 10);
+        this.speed = parseInt(document.getElementById("speed").value, 10); //Update the speed of the game
 
-        if (this.tickCount++ >= this.speed && this.speed != 120) {
+        //Update the board after a given number of ticks
+        if (this.tickCount + 1 >= this.speed && this.speed < 120) {
+            //Update the tick information
             this.tickCount = 0;
             this.ticks++;
             document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
 
+            //Create the replacement automata
             let nextAutomata = [];
             for (let i = 0; i < this.width; i++) {
-                nextAutomata.push([]);
+                nextAutomata.push([]); //Create 2D array
                 for (let j = 0; j < this.height; j++) {
+                    //If the current cell is alive, and there are two or three surrounding cells, the cell remains alive.
+                    //If the current cell is dead, however, and there are three surrounding cells, the cell becomes alive.
+                    //Otherwise, the current cell is dead.
                     if ((this.automata[i][j] && (this.countAlive(i, j) === 2 || this.countAlive(i, j) === 3)) ||
                         (!this.automata[i][j] && this.countAlive(i, j) === 3)) {
                         nextAutomata[i][j] = 1;
