@@ -27,9 +27,9 @@ class Automata {
         let count = 0;
         for (let i = -1; i < 2; i++) {
             for (let j = -1; j < 2; j++) {
-                //First, check to make sure that the current cell is not being examined.
-                //Then, if the examined cell is alive, increment the counter.
-                if ((i || j) && this.automata[col + i][row + j]) {
+                //First, check to make sure that the current cell is not being examined by itself.
+                //Then, if the adjacent cells are alive, increment the counter.
+                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) {
                     count++;
                 }
             }
