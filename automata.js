@@ -30,7 +30,9 @@ class Automata {
                 /*if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) {
                     count++;
                 }*/
-                count += (i || j) && this.automata[col] && this.automata[col][row];
+                if (i != col && j != row) {
+                    count += this.automata[i][j];
+                }
             }
         }
         return count;
