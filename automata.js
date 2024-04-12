@@ -4,14 +4,14 @@ class Automata {
         Object.assign(this, game); //Assign properties of the provided game engine to this automata
         
         //Size of the automata
-        this.automata = [];
+        /*this.automata = [];
         this.height = 100;
         this.width = 200;
 
         //Speed of the automata
         this.tickCount = 0;
         this.ticks = 0;
-        this.speed = parseInt(document.getElementById("speed"), 10); //Retrieve speed from HTML file
+        this.speed = parseInt(document.getElementById("speed"), 10); //Retrieve speed from HTML file*/
 
         //Create the random automata
         for (let i = 0; i < this.width; i++) {
