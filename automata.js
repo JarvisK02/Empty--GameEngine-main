@@ -25,9 +25,9 @@ class Automata {
         let count = 0;
         for (let i = col - 1; i <= col + 1; i++) {
             for (let j = row - 1; j <= row + 1; j++) {
-                //First, check to make sure that the current cell is not being examined.
-                //Then, if the adjacent cells are alive, increment the counter.
-                if (/*this.automata[i] && */this.automata[i][j] && (i != col || j != row)) {
+                //First, check if the adjacent cells are alive.
+                //Then, given we are not checking the current cell, increment the counter.
+                if (this.automata[i] && this.automata[i][j] && (i != col || j != row)) {
                     count++;
                 }
             }
@@ -40,11 +40,11 @@ class Automata {
         this.speed = parseInt(document.getElementById("speed").value, 10); //Update the speed of the game
 
         //Update the board after a given number of ticks
-        if (this.tickCount++ >= this.speed && this.speed != 120) {
+        if (this.tickCount + 1 >= this.speed) {
             //Update the tick information
             this.tickCount = 0;
             this.ticks++;
-            document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
+            document.getElementById("ticks").innerHTML = "Ticks: " + this.ticks;
 
             //Create the replacement automata
             let nextAutomata = [];
