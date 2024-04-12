@@ -2,7 +2,7 @@ class Automata {
     //Automata constructor
     constructor(game) {
         Object.assign(this, game); //Assign properties of the provided game engine to this automata
-        
+
         //Speed of the automata
         this.tickCount = 0;
         this.ticks = 0;
@@ -23,13 +23,14 @@ class Automata {
     //Count the living cells surrounding a given cell
     countAlive(col, row) {
         let count = 0;
-        for (let i = -1; i < 2; i++) {
-            for (let j = -1; j < 2; j++) {
+        for (let i = col - 1; i < col + 2; i++) {
+            for (let j = row - 1; j < row + 2; j++) {
                 //First, check to make sure that the current cell is not being examined.
                 //Then, if the adjacent cells are alive, increment the counter.
-                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) {
+                /*if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) {
                     count++;
-                }
+                }*/
+                count += (i || j) && this.automata[col] && this.automata[col][row];
             }
         }
         return count;
