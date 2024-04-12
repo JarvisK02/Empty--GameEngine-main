@@ -23,14 +23,19 @@ class Automata {
     //Count the living cells surrounding a given cell
     countAlive(col, row) {
         let count = 0;
-        for (let i = col - 1; i < col + 2; i++) {
-            for (let j = row - 1; j < row + 2; j++) {
+        for (let i = col - 1; i <= col + 1; i++) {
+            for (let j = row - 1; j <= row + 1; j++) {
                 //First, check to make sure that the current cell is not being examined.
                 //Then, if the adjacent cells are alive, increment the counter.
                 /*if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) {
                     count++;
                 }*/
-                count += (i != col && j != row) && this.automata[i] && this.automata[i][j];
+                //count += (i != col && j != row) && this.automata[i] && this.automata[i][j];
+                if ((i == col && j == row) || (i < 0 || j < 0)) {
+                    continue;
+                } else if (this.automata[i][j]) {
+                    count++;
+                }
             }
         }
         return count;
