@@ -3,17 +3,15 @@ class Automata {
     constructor(game) {
         Object.assign(this, game); //Assign properties of the provided game engine to this automata
         
-        //Size of the automata
-        /*this.automata = [];
-        this.height = 100;
-        this.width = 200;
-
         //Speed of the automata
         this.tickCount = 0;
         this.ticks = 0;
-        this.speed = parseInt(document.getElementById("speed"), 10); //Retrieve speed from HTML file*/
+        this.speed = parseInt(document.getElementById("speed"), 10); //Retrieve speed from HTML file
 
         //Create the random automata
+        this.automata = [];
+        this.height = 100;
+        this.width = 200;
         for (let i = 0; i < this.width; i++) {
             this.automata.push([]); //Create 2D array
             for (let j = 0; j < this.height; j++) {
