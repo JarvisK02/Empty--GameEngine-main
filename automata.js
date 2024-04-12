@@ -40,7 +40,7 @@ class Automata {
         this.speed = parseInt(document.getElementById("speed").value, 10); //Update the speed of the game
 
         //Update the board after a given number of ticks
-        if (this.tickCount + 1 >= this.speed && this.speed != 120) {
+        if (this.tickCount++ >= this.speed && this.speed != 120) {
             //Update the tick information
             this.tickCount = 0;
             this.ticks++;
